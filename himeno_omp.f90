@@ -1,4 +1,5 @@
 ! Simple f90 port of original f77 code
+! This code adds OpenMP offload
 ! Douglas Shanks, HPE , 2023
 !
 ! This benchmark test program is measuring a cpu performance
