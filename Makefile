@@ -2,9 +2,9 @@ INCLUDES = -I.
 
 FC = ftn
 
-FCFLAGS = -eF -homp -hacc
+FCFLAGS = -eF -homp
 
-FCLINKFLAGS = 
+FCLINKFLAGS = -lcraymp
 
 EXE=himeno.exe
 
@@ -24,6 +24,6 @@ clean:
 	rm -rf $(EXE) $(OBJS) *.i
 
 cleanall: clean
-	rm -rf my_output* *.rpt myrep* *.out *.lst *+pat *+apa *.ap2 *.xf *_exp.*
+	rm -rf my_output* *.rpt myrep* *.out *.lst *+pat *+apa *.ap2 *.xf *_exp.* *.acc.o *.acc.s
 
 
