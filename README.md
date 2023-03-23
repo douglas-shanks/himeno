@@ -1,5 +1,5 @@
 # himeno
-Fortran 90 version of himeno benchmark.
+Fortran 90 version of himeno benchmark. Target offload just focuses on the Jacobi solver.
 
 # Compile
 
