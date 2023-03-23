@@ -231,9 +231,9 @@ DO k=2,kmax-1
       wgosa=wgosa+ss*ss
       wrk2(i,j,k)=p(i,j,k)+omega *ss
     END DO
-    !omp end simd reduction
+!omp end simd
   END DO
-  !$omp end parallel for reduction
+!$omp end parallel for
 END DO
 !$omp end target teams distribute parallel for
 
@@ -245,9 +245,9 @@ DO k=2,kmax-1
     DO i=2,imax-1
       p(i,j,k)=wrk2(i,j,k)
     END DO
-    !omp end simd
+!omp end simd
   END DO
-  !omp end parallel for
+!omp end parallel for
 END DO
 !omp end target teams distribute
 !$omp end target data
