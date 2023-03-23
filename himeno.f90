@@ -210,12 +210,16 @@ INTEGER*4 istat
 INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
+!$omp target data map(to: a,b,c,p,wrk2,wrk1,bnd) 
 DO loop=1,nn
   gosa=0.0
   wgosa=0.0
-
+  
+!$omp target teams distribute reduction(+: wgosa) private(s0,ss)
 DO k=2,kmax-1
+!$omp parallel for reduction (+: wgosa) 
   DO j=2,jmax-1
+!$omp simd reduction (+: wgosa)  
     DO i=2,imax-1
       s0=a(i,j,k,1)*p(i+1,j,k)+a(i,j,k,2)*p(i,j+1,k) +a(i,j,k,3)*p(i,j,k+1)  &
           +b(i,j,k,1)*(p(i+1,j+1,k)-p(i+1,j-1,k) -p(i-1,j+1,k)+p(i-1,j-1,k))  &
@@ -230,9 +234,11 @@ DO k=2,kmax-1
   END DO
 END DO
 
-
+!$omp target teams distribute
 DO k=2,kmax-1
+!$omp parallel for
   DO j=2,jmax-1
+!$omp simd  
     DO i=2,imax-1
       p(i,j,k)=wrk2(i,j,k)
     END DO
