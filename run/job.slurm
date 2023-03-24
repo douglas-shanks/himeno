@@ -14,20 +14,18 @@ ulimit -c unlimited
 ulimit -s unlimited
 
 gpu_bind=select_gpu.sh
-cpu_bind= "--cpu-bind=map_cpu:50,58,18,26,2,10,34,42" # 48,56,16,24,0,8,32,40"
+cpu_bind="--cpu-bind=map_cpu:48,56,16,24,0,8,32,40"
 
-module load craype-x86-trento
-module load craype-accel-amd-gfx90a
-module load rocm
+source gpu_env.sh
 export MPICH_GPU_SUPPORT_ENABLED=1
 export MPICH_OFI_NIC_POLICY=GPU #NUMA
-
 export OMP_NUM_THREADS=1
 export OMP_PROC_BIND=close
 export OMP_PLACES=cores
+export NO_STOP_MESSAGE=1
 
-exe1=./himeno_omp.exe
-exe2=./himeno_acc.exe
+exe1=../src/himeno_omp.exe
+exe2=../src/himeno_acc.exe
 
 time srun -N ${SLURM_NNODES} -n ${SLURM_NTASKS} -c ${OMP_NUM_THREADS} ${cpu_bind} ${gpu_bind} ${exe1}
 wait

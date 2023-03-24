@@ -1,5 +1,5 @@
 ! Simple f90 port of original f77 code
-! This code adds OpenMP offload
+! This code add OpenACC offload
 ! Douglas Shanks, HPE , 2023
 !
 ! This benchmark test program is measuring a cpu performance
@@ -78,7 +78,7 @@ END IF
 nn=10
 IF(id == 0) THEN
   WRITE(*,*) ' Start rehearsal measurement process.'
-  WRITE(*,*) ' Measure the performance in 3 times.'
+  WRITE(*,*) ' Measure the performance in',nn,' times.'
 END IF
 
 gosa= 0.0
@@ -126,13 +126,15 @@ CALL mpi_reduce(cpu1, cpu,  &
 
 IF(id == 0) THEN
   IF(cpu /= 0.0)  xmflops2=flop*1.0D-6/cpu*REAL(nn)
-  
+
+  WRITE(*,*) ' cpu ', cpu , 'sec'
   WRITE(*,*) ' Loop executed for ',nn,' times'
   WRITE(*,*) ' Gosa :',gosa
-  WRITE(*,*) ' MFLOPS:',xmflops2, '  time(s):',cpu
+  WRITE(*,*) ' MFLOPS measured :',xmflops2
   score=xmflops2/82.84
   WRITE(*,*) ' Score based on Pentium III 600MHz :',score
 END IF
+
 CALL mpi_finalize(ierr)
 
 STOP
@@ -211,16 +213,15 @@ INTEGER*4 istat
 INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
-!$omp target data map(to: a,b,c,p,wrk2,wrk1,bnd)
+!$acc data copyin(a,b,c,p,wrk2,wrk1,bnd)
 DO loop=1,nn
   gosa=0.0
   wgosa=0.0
 
-!$omp target teams distribute reduction(+: wgosa) private(s0,ss) 
+!$acc kernels
+!$acc parallel loop collapse(3) reduction(+: wgosa) private(s0,ss) 
 DO k=2,kmax-1
-!$omp parallel do reduction (+: wgosa)
   DO j=2,jmax-1
-!$omp simd reduction (+: wgosa)
     DO i=2,imax-1
       s0=a(i,j,k,1)*p(i+1,j,k)+a(i,j,k,2)*p(i,j+1,k) +a(i,j,k,3)*p(i,j,k+1)  &
           +b(i,j,k,1)*(p(i+1,j+1,k)-p(i+1,j-1,k) -p(i-1,j+1,k)+p(i-1,j-1,k))  &
@@ -232,25 +233,20 @@ DO k=2,kmax-1
       wgosa=wgosa+ss*ss
       wrk2(i,j,k)=p(i,j,k)+omega *ss
     END DO
-!$omp end simd    
   END DO
-!$omp end parallel do
 END DO
-!$omp end target teams distribute
+!$acc end parallel loop
 
-!$omp target teams distribute
+!$acc parallel loop collapse(3) 
 DO k=2,kmax-1
-!$omp parallel do
   DO j=2,jmax-1
-!$omp simd  
     DO i=2,imax-1
       p(i,j,k)=wrk2(i,j,k)
     END DO
-!$omp end simd    
   END DO
-!$omp end parallel do
 END DO
-!$omp end target teams distribute
+!$acc end parallel loop
+!$acc end kernels
 
 CALL sendp(ndx,ndy,ndz)
 
@@ -260,7 +256,7 @@ CALL mpi_allreduce(wgosa, gosa,  &
     ierr)
 
 END DO
-!$omp end target data
+!$acc end data
 !C End of iteration
 RETURN
 END SUBROUTINE jacobi
