@@ -146,8 +146,8 @@ SUBROUTINE initmt(mz,it)
 
 IMPLICIT REAL*4(a-h,o-z)
 
-INTEGER, INTENT(IN OUT)                  :: mz
-INTEGER, INTENT(IN OUT)                  :: it
+INTEGER, INTENT(INOUT)                  :: mz
+INTEGER, INTENT(INOUT)                  :: it
 
 INCLUDE 'param.h'
 
