@@ -1,5 +1,5 @@
 # himeno
-Fortran 90 version of himeno benchmark with ports for OpenACC and OpenMP offload to GPUs. Target offload just focuses on the Jacobi solver.
+Fortran 90 version of himeno benchmark with ports for OpenACC and OpenMP offload to GPUs. The OpenMP target offload just focuses on the Jacobi solver.
 
 # Compile
 
