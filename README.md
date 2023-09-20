@@ -3,7 +3,8 @@ Fortran 90 version of himeno benchmark with ports for OpenACC and OpenMP offload
 
 # Compile
 
-Firstly one needs to load the appropriate modules for whichever architecture is being targeted.
+Firstly one needs to load the appropriate modules for whichever architecture is being targeted. In the run directory `gpu_env.sh` gives an example of this for using the Cray compiler and targetting AMD MI205X hardware.
+
 Then on most systems `make` will be sufficient to compile the benchmark successfully.
 
 # Run
