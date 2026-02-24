@@ -81,7 +81,7 @@ fi
 
 echo '      parameter(mimax='$itmp',mjmax='$jtmp',mkmax='$ktmp')' >> param.h
 echo '      parameter(ndx='$ndx',ndy='$ndy',ndz='$ndz',ndims=3)' >> param.h
-echo 'C' >> param.h
+echo '!' >> param.h
 unset mx0
 unset my0
 unset mz0

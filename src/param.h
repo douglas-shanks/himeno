@@ -1,7 +1,7 @@
 !
       parameter(mx0=1025,my0=513,mz0=513)
-      parameter(mimax=515,mjmax=259,mkmax=259)
-      parameter(ndx=2,ndy=2,ndz=2,ndims=3)
+      parameter(mimax=515,mjmax=259,mkmax=513)
+      parameter(ndx=2,ndy=2,ndz=1,ndims=3)
 !
       dimension  iop(ndims)
       dimension  npx(2),npy(2),npz(2)
@@ -24,4 +24,3 @@
       common /mtrx/   a,b,c
       common /bound/  bnd
       common /work/   wrk1,wrk2
-
