@@ -7,7 +7,7 @@ Firstly one needs to load the appropriate modules for whichever architecture is 
 
 Then on most systems `make` will be sufficient to compile the benchmark successfully.
 
-To setup a differenet model one can change the header file by using the provided script paramset.sh e.g XL model with a decomposition of 2x2x1 `./paramset.sh XL 2 2 1`
+To setup a differenet model one can change the header file by using the provided script paramset.sh e.g XL model with a decomposition of 2x2x1 `bash paramset.sh XL 2 2 1`
 
 # Run
 
