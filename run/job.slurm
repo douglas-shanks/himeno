@@ -17,7 +17,6 @@ gpu_bind=select_gpu.sh
 cpu_bind="--cpu-bind=map_cpu:48,56,16,24,0,8,32,40"
 
 source gpu_env.sh
-export MPICH_GPU_SUPPORT_ENABLED=1
 export MPICH_OFI_NIC_POLICY=GPU #NUMA
 export OMP_NUM_THREADS=1
 export OMP_PROC_BIND=close
