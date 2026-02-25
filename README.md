@@ -1,4 +1,4 @@
-# himeno OpenMP GPU offloading
+# himeno OpenMP and OpenACC GPU offloading
 Fortran 90 version of himeno benchmark with ports for OpenACC and OpenMP offload to GPUs. This is a simple example and the use OpenMP target offload just focuses on the Jacobi solver, the MPI is not GPU-aware.
 
 # Compile
