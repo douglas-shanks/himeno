@@ -40,9 +40,10 @@
 
 PROGRAM himenobmtxp
 
+USE MPI
+
 IMPLICIT REAL*4(a-h,o-z)
 
-INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
 !     ttarget specifys the measuring period in sec
@@ -203,6 +204,8 @@ END SUBROUTINE initmt
 SUBROUTINE jacobi(nn,gosa)
 !*************************************************************
 
+USE MPI
+
 IMPLICIT REAL*4(a-h,o-z)
 
 INTEGER, INTENT(IN)                      :: nn
@@ -210,7 +213,6 @@ REAL, INTENT(OUT)                        :: gosa
 
 INTEGER*4 istat
 
-INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
 !$omp target data map(to: a,b,c,p,wrk2,wrk1,bnd)
@@ -263,9 +265,10 @@ END SUBROUTINE jacobi
 
 SUBROUTINE initcomm
 
+USE MPI
+
 IMPLICIT REAL*4(a-h,o-z)
 
-INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
 LOGICAL :: ipd(3),ir
@@ -330,6 +333,8 @@ END SUBROUTINE initcomm
 
 SUBROUTINE initmax(mx,my,mz,ks)
 
+USE MPI
+
 IMPLICIT REAL*4(a-h,o-z)
 
 INTEGER, INTENT(IN)                      :: mx
@@ -338,7 +343,6 @@ INTEGER, INTENT(IN)                      :: mz
 INTEGER, INTENT(OUT)                     :: ks
 
 INCLUDE 'param.h'
-INCLUDE 'mpif.h'
 
 INTEGER :: itmp
 INTEGER :: mx1(0:ndx),my1(0:ndy),mz1(0:ndz)
@@ -456,9 +460,10 @@ END SUBROUTINE sendp
 
 SUBROUTINE sendp3()
 
+USE MPI
+
 IMPLICIT REAL*4(a-h,o-z)
 
-INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
 DIMENSION ist(mpi_status_size,0:3),ireq(0:3)
@@ -494,9 +499,10 @@ END SUBROUTINE sendp3
 
 SUBROUTINE sendp2()
 
+USE MPI
+
 IMPLICIT REAL*4(a-h,o-z)
 
-INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
 DIMENSION ist(mpi_status_size,0:3),ireq(0:3)
@@ -532,9 +538,10 @@ END SUBROUTINE sendp2
 
 SUBROUTINE sendp1()
 
+USE MPI
+
 IMPLICIT REAL*4(a-h,o-z)
 
-INCLUDE 'mpif.h'
 INCLUDE 'param.h'
 
 DIMENSION ist(mpi_status_size,0:3),ireq(0:3)
